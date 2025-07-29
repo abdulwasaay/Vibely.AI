@@ -17,7 +17,6 @@ const NavbarLatest = () => {
     const { mode, setMode } = useContext(modeContext);
     const iconColor = theme.palette.text.secondary;
     const isMobileFirst = useMediaQuery('(max-width:768px)');
-    const isMobileSecond = useMediaQuery('(max-width:768px)');
 
     const modeIcon = !mode ? <DarkModeOutlinedIcon sx={{ color: iconColor }} /> : <LightModeOutlinedIcon sx={{ color: iconColor }} />
 
@@ -152,7 +151,7 @@ const NavbarLatest = () => {
     return (
         <>
             {
-                isMobileSecond ? (
+                isMobileFirst ? (
                     <NAVAccordion
                         actionSummary={actionSummary}
                         accordionDetails={accordionDetails}
