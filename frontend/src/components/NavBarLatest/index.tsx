@@ -6,10 +6,11 @@ import { usePathname } from "next/navigation";
 import ButtonLatest from "../ButtonLatest";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { modeContext } from "@/context/themeContext";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NAVAccordion from "./navDrawer";
+import { withClientOnly } from "../ClientOnlyComponent";
 
 const NavbarLatest = () => {
     const theme = useTheme();
@@ -166,4 +167,4 @@ const NavbarLatest = () => {
     )
 }
 
-export default NavbarLatest
+export default withClientOnly(NavbarLatest)

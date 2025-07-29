@@ -5,6 +5,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Image from "next/image";
+import { withClientOnly } from "../ClientOnlyComponent";
 
 const FooterLatest = () => {
     const isMobileFirst = useMediaQuery('(max-width:768px)');
@@ -49,4 +50,4 @@ const FooterLatest = () => {
     );
 };
 
-export default FooterLatest;
+export default withClientOnly(FooterLatest);
