@@ -10,7 +10,6 @@ import { useContext, useEffect, useState } from "react";
 import { modeContext } from "@/context/themeContext";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NAVAccordion from "./navDrawer";
-import { withClientOnly } from "../ClientOnlyComponent";
 
 const NavbarLatest = () => {
     const theme = useTheme();
@@ -167,4 +166,4 @@ const NavbarLatest = () => {
     )
 }
 
-export default withClientOnly(NavbarLatest)
+export default NavbarLatest

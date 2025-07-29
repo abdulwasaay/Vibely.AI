@@ -1,8 +1,14 @@
+"use client"
+import dynamic from "next/dynamic";
 import ButtonLatest from "./ButtonLatest";
 import { withClientOnly } from "./ClientOnlyComponent";
-import FooterLatest from "./FooterLatest";
-import NavbarLatest from "./NavBarLatest";
 import ClientThemeProvider from "./parentThemeComponent/clientThemeProvider";
+const NavbarLatest = dynamic(() => import("./NavBarLatest"), {
+    ssr: false
+})
+const FooterLatest = dynamic(() => import("./FooterLatest"), {
+    ssr: false
+})
 
 export {
     NavbarLatest,

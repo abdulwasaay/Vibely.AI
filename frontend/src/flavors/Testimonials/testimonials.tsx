@@ -104,6 +104,10 @@ const CustomerTestimonials = () => {
                                     borderRadius: 3,
                                     boxShadow: "0 2px 16px 0 rgba(0,0,0,0.04)",
                                     background: theme.palette.background.paper,
+                                    transition: "transform 0.3s, box-shadow 0.3s",
+                                    '&:hover': {
+                                        transform: 'scale(1.02)',
+                                    }
                                 }}
                             >
                                 <Avatar src={t.avatar} alt={t.name} sx={{ width: 56, height: 56, mb: 2 }} />
@@ -137,9 +141,6 @@ const CustomerTestimonials = () => {
                                         "&::-webkit-scrollbar-thumb": {
                                             background: theme.palette.text.primary,
                                             borderRadius: 20,
-                                        },
-                                        "&:hover": {
-                                            boxShadow: "0 0 0 2px #ff9800 inset",
                                         },
                                     }}
                                 >
