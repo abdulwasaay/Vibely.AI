@@ -3,7 +3,6 @@ import { Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import MainProvider from "@/context";
 import { ClientThemeProvider } from "@/components";
-import { CssBaseline } from "@mui/material";
 
 const montserrat = Montserrat({
   variable: "--font-monsterrat",
@@ -29,11 +28,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${montserrat.variable} ${geistMono.variable} antialiased`}
-        style={{fontFamily:"var(--font-monsterrat)"}}
+        style={{ fontFamily: "var(--font-monsterrat)" }}
       >
         <MainProvider>
           <ClientThemeProvider>
-            <CssBaseline />
             {children}
           </ClientThemeProvider>
         </MainProvider>

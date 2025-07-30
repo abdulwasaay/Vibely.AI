@@ -2,7 +2,7 @@
 import { Box, Divider, Grid, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ButtonLatest from "../ButtonLatest";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -17,6 +17,7 @@ const NavbarLatest = () => {
     const { mode, setMode } = useContext(modeContext);
     const iconColor = theme.palette.text.secondary;
     const isMobileFirst = useMediaQuery('(max-width:768px)');
+    const { push } = useRouter();
 
     const modeIcon = !mode ? <DarkModeOutlinedIcon sx={{ color: iconColor }} /> : <LightModeOutlinedIcon sx={{ color: iconColor }} />
 
@@ -24,7 +25,7 @@ const NavbarLatest = () => {
         return (
             <Grid container px={{ lg: 14, xs: 3, md: 6 }} py={isMobileFirst ? 2 : 1} sx={{ background: theme.palette.background.default }}>
                 <Box display={"flex"} width={"100%"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Box display={"flex"} gap={1} alignItems={"center"}>
+                    <Box display={"flex"} gap={1} alignItems={"center"} onClick={() => push("/")} sx={{cursor: "pointer"}}>
                         <Image
                             src={"/logo.png"}
                             alt="Logo"
@@ -89,7 +90,7 @@ const NavbarLatest = () => {
     }
 
     const actionSummary = (
-        <Box display={"flex"} gap={1} alignItems={"center"}>
+        <Box display={"flex"} gap={1} alignItems={"center"} onClick={() => push("/")} sx={{cursor: "pointer"}}>
             <Image
                 src={"/logo.png"}
                 alt="Logo"

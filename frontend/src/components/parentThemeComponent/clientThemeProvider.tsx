@@ -1,7 +1,7 @@
 "use client"
 import { modeContext } from "@/context/themeContext"
 import setTheme from "@/theme/theme"
-import { ThemeProvider } from "@mui/material"
+import { CssBaseline, ThemeProvider } from "@mui/material"
 import React, { useContext } from "react"
 
 const ClientThemeProvider = ({ children }: { children: React.ReactNode }) => {
@@ -11,6 +11,7 @@ const ClientThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             {children}
         </ThemeProvider>
     )

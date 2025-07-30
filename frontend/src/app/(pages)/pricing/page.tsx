@@ -1,5 +1,12 @@
+import { SubscriptionPlans } from "@/flavors"
+import { Grid } from "@mui/material"
+
 const Pricing = () => {
-    return <h1>as</h1>
+    return (
+        <Grid sx={{ px: 2 }}>
+            <SubscriptionPlans />
+        </Grid>
+    )
 }
 
 export default Pricing

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import ButtonLatest from "./ButtonLatest";
 import { withClientOnly } from "./ClientOnlyComponent";
 import ClientThemeProvider from "./parentThemeComponent/clientThemeProvider";
-import { Grid } from "@mui/material";
+import Plan from "./Plans";
 const NavbarLatest = dynamic(() => import("./NavBarLatest"), {
     ssr: false,
 })
@@ -16,5 +16,6 @@ export {
     ClientThemeProvider,
     ButtonLatest,
     FooterLatest,
-    withClientOnly
+    withClientOnly,
+    Plan
 }
