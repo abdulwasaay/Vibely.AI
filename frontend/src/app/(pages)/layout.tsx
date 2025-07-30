@@ -1,3 +1,4 @@
+
 import { FooterLatest, NavbarLatest } from "@/components";
 
 export default function RootLayout({
