@@ -22,6 +22,7 @@ const NavbarLatest = () => {
     const { setOpen } = useContext(FormContext);
 
     const modalOpener = useCallback(() => {
+        document.activeElement instanceof HTMLElement && document.activeElement.blur();
         setOpen(true);
     }, []);
 
