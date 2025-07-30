@@ -2,7 +2,7 @@ import { Input, InputProps , SxProps, Theme } from "@mui/material"
 
 interface InputTextFieldProps {
     placeHolder?: string;
-    formik?: any;
+    formik?: {};
     sx?: SxProps<Theme>;
     type?: string;
 }
