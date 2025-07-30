@@ -33,7 +33,7 @@ const LoginForm = () => {
                 >
                     <CloseIcon />
                 </IconButton>
-                <Typography variant="h5" fontWeight={700} textAlign="center" mb={1}>
+                <Typography variant="h2" fontWeight={700} textAlign="center" mb={1}>
                     Login
                 </Typography>
                 <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
