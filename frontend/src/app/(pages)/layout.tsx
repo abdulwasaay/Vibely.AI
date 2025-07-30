@@ -1,5 +1,6 @@
 "use client"
 import { FooterLatest, NavbarLatest } from "@/components";
+import LoginForm from "@/forms/LoginForm";
 
 export default function RootLayout({
     children,
@@ -14,6 +15,7 @@ export default function RootLayout({
                 {children}
             </main>
             <FooterLatest />
+              <LoginForm />
         </div>
     );
 }

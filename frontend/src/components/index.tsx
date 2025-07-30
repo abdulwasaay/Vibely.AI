@@ -4,6 +4,7 @@ import ButtonLatest from "./ButtonLatest";
 import { withClientOnly } from "./ClientOnlyComponent";
 import ClientThemeProvider from "./parentThemeComponent/clientThemeProvider";
 import Plan from "./Plans";
+import InputTextField from "./InputFields/TextField";
 const NavbarLatest = dynamic(() => import("./NavBarLatest"), {
     ssr: false,
 })
@@ -17,5 +18,6 @@ export {
     ButtonLatest,
     FooterLatest,
     withClientOnly,
-    Plan
+    Plan,
+    InputTextField
 }

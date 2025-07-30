@@ -6,10 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import ButtonLatest from "../ButtonLatest";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext } from "react";
 import { modeContext } from "@/context/themeContext";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NAVAccordion from "./navDrawer";
+import { FormContext } from "@/context/FormContext.tsx/FormContext";
 
 const NavbarLatest = () => {
     const theme = useTheme();
@@ -18,6 +19,15 @@ const NavbarLatest = () => {
     const iconColor = theme.palette.text.secondary;
     const isMobileFirst = useMediaQuery('(max-width:768px)');
     const { push } = useRouter();
+    const { setOpen } = useContext(FormContext);
+
+    const modalOpener = useCallback(() => {
+        setOpen(true);
+    }, []);
+
+    const modeChanger = useCallback(() => {
+        setMode(!mode);
+    }, []);
 
     const modeIcon = !mode ? <DarkModeOutlinedIcon sx={{ color: iconColor }} /> : <LightModeOutlinedIcon sx={{ color: iconColor }} />
 
@@ -25,7 +35,7 @@ const NavbarLatest = () => {
         return (
             <Grid container px={{ lg: 14, xs: 3, md: 6 }} py={isMobileFirst ? 2 : 1} sx={{ background: theme.palette.background.default }}>
                 <Box display={"flex"} width={"100%"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Box display={"flex"} gap={1} alignItems={"center"} onClick={() => push("/")} sx={{cursor: "pointer"}}>
+                    <Box display={"flex"} gap={1} alignItems={"center"} onClick={() => push("/")} sx={{ cursor: "pointer" }}>
                         <Image
                             src={"/logo.png"}
                             alt="Logo"
@@ -72,7 +82,7 @@ const NavbarLatest = () => {
                         <Box>
                             <ButtonLatest
                                 title="LogIn"
-                                clickHandler={() => console.log("s")}
+                                clickHandler={modalOpener}
                             />
                         </Box>
                         <IconButton onClick={() => setMode(!mode)}>
@@ -90,7 +100,7 @@ const NavbarLatest = () => {
     }
 
     const actionSummary = (
-        <Box display={"flex"} gap={1} alignItems={"center"} onClick={() => push("/")} sx={{cursor: "pointer"}}>
+        <Box display={"flex"} gap={1} alignItems={"center"} onClick={() => push("/")} sx={{ cursor: "pointer" }}>
             <Image
                 src={"/logo.png"}
                 alt="Logo"
@@ -140,10 +150,10 @@ const NavbarLatest = () => {
                 <Box>
                     <ButtonLatest
                         title="LogIn"
-                        clickHandler={() => console.log("s")}
+                        clickHandler={modalOpener}
                     />
                 </Box>
-                <IconButton onClick={() => setMode(!mode)}>
+                <IconButton onClick={modeChanger}>
                     {modeIcon}
                 </IconButton>
             </Box>

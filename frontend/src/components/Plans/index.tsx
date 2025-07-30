@@ -3,7 +3,15 @@ import { Box, Card, CardContent, Grid, Typography, useTheme } from "@mui/materia
 import Image from "next/image"
 import ButtonLatest from "../ButtonLatest"
 
-const Plan = ({ plan }: { plan: any }) => {
+type PlanProps = {
+    title: string;
+    desc: string;
+    price: string;
+    credits: string;
+    icon: string;
+}
+
+const Plan = ({ plan }: { plan: PlanProps }) => {
     const theme = useTheme();
 
     return (
@@ -17,7 +25,6 @@ const Plan = ({ plan }: { plan: any }) => {
                     alignItems: "center",
                     p: 2,
                     background: theme.palette.background.paper,
-                    boxShadow: "0 2px 16px 0 #e2e8f0",
                 }}
             >
                 <Box sx={{ mt: 2, mb: 1 }}>
