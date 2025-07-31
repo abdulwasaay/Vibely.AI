@@ -29,7 +29,7 @@ const ForgotForm: React.FC<LoginModalProps> = ({
                 Forgot Password
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
-                "No problem! Enter your email to recover your account."
+                &quot;No problem! Enter your email to recover your account.&quot;
             </Typography>
             <Box mb={1}>
                 <InputTextField
