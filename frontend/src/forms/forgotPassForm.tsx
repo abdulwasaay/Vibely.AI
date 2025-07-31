@@ -10,7 +10,7 @@ interface LoginModalProps {
     closeModal: () => void;
 }
 
-const LoginForm: React.FC<LoginModalProps> = ({
+const ForgotForm: React.FC<LoginModalProps> = ({
     closeModal
 }) => {
 
@@ -23,11 +23,6 @@ const LoginForm: React.FC<LoginModalProps> = ({
         setType(formModalTypes?.signupModal)
     }
 
-    const forgotPassModalHandler = () => {
-        setOpen(true);
-        setType(formModalTypes?.forgotModal)
-    }
-
     return (
         <>
             <IconButton
@@ -38,35 +33,17 @@ const LoginForm: React.FC<LoginModalProps> = ({
                 <CloseIcon />
             </IconButton>
             <Typography variant="h2" fontWeight={700} textAlign="center" mb={1}>
-                Login
+                Forgot Password
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
-                Welcome back! Please sign in to continue
+                "No problem! Enter your email to recover your account."
             </Typography>
             <Box mb={1}>
                 <InputTextField
-                    placeHolder="Email id / Username"
-                    type="text"
+                    placeHolder="Email id"
+                    type="email"
                     fullWidth
                     sx={{ padding: "5px 10px", mb: 1 }}
-                />
-                <InputTextField
-                    placeHolder="Password"
-                    type="password"
-                    fullWidth
-                    sx={{ padding: "5px 10px" }}
-                />
-            </Box>
-            <Box mb={2} display="flex" justifyContent="flex-end">
-                <ButtonLatest
-                    title="Forgot password?"
-                    clickHandler={forgotPassModalHandler}
-                    disableRipple
-                    sx={{
-                        background: "none",
-                        color: theme.palette.primary.main,
-                        padding: 0
-                    }}
                 />
             </Box>
             <Button
@@ -80,25 +57,13 @@ const LoginForm: React.FC<LoginModalProps> = ({
                     py: 1.2,
                     fontSize: 16,
                     mb: 2,
+                    mt:2
                 }}
             >
-                login
+                Send
             </Button>
-            <Typography variant="body2" color="text.secondary" textAlign="center">
-                Don&apos;t have an account?{" "}
-                <ButtonLatest
-                    title="Sign up"
-                    clickHandler={NotHavAccountHandler}
-                    disableRipple
-                    sx={{
-                        background: "none",
-                        color: theme.palette.primary.main,
-                        padding: 0
-                    }}
-                />
-            </Typography>
         </>
     );
 };
 
-export default LoginForm;
+export default ForgotForm;

@@ -1,5 +1,5 @@
 "use client"
-import { Box, Typography, IconButton, Button, Link as MuiLink, useTheme } from "@mui/material";
+import { Box, Typography, IconButton, Button, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ButtonLatest, InputTextField } from "@/components";
 import { FormContext } from "@/context/FormContext.tsx/FormContext";
@@ -10,22 +10,16 @@ interface LoginModalProps {
     closeModal: () => void;
 }
 
-const LoginForm: React.FC<LoginModalProps> = ({
+const SignupForm: React.FC<LoginModalProps> = ({
     closeModal
 }) => {
 
     const theme = useTheme();
-
     const { setOpen, setType } = useContext(FormContext);
 
-    const NotHavAccountHandler = () => {
+    const havAccountHandler = () => {
         setOpen(true);
-        setType(formModalTypes?.signupModal)
-    }
-
-    const forgotPassModalHandler = () => {
-        setOpen(true);
-        setType(formModalTypes?.forgotModal)
+        setType(formModalTypes?.loginModal)
     }
 
     return (
@@ -38,15 +32,21 @@ const LoginForm: React.FC<LoginModalProps> = ({
                 <CloseIcon />
             </IconButton>
             <Typography variant="h2" fontWeight={700} textAlign="center" mb={1}>
-                Login
+                Signup
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
-                Welcome back! Please sign in to continue
+                Join us today! Create your account to get started.
             </Typography>
             <Box mb={1}>
                 <InputTextField
-                    placeHolder="Email id / Username"
+                    placeHolder="User id"
                     type="text"
+                    fullWidth
+                    sx={{ padding: "5px 10px", mb: 1 }}
+                />
+                <InputTextField
+                    placeHolder="Email id"
+                    type="email"
                     fullWidth
                     sx={{ padding: "5px 10px", mb: 1 }}
                 />
@@ -55,18 +55,6 @@ const LoginForm: React.FC<LoginModalProps> = ({
                     type="password"
                     fullWidth
                     sx={{ padding: "5px 10px" }}
-                />
-            </Box>
-            <Box mb={2} display="flex" justifyContent="flex-end">
-                <ButtonLatest
-                    title="Forgot password?"
-                    clickHandler={forgotPassModalHandler}
-                    disableRipple
-                    sx={{
-                        background: "none",
-                        color: theme.palette.primary.main,
-                        padding: 0
-                    }}
                 />
             </Box>
             <Button
@@ -80,15 +68,16 @@ const LoginForm: React.FC<LoginModalProps> = ({
                     py: 1.2,
                     fontSize: 16,
                     mb: 2,
+                    mt: 2
                 }}
             >
-                login
+                Signup
             </Button>
             <Typography variant="body2" color="text.secondary" textAlign="center">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <ButtonLatest
-                    title="Sign up"
-                    clickHandler={NotHavAccountHandler}
+                    title="Log In"
+                    clickHandler={havAccountHandler}
                     disableRipple
                     sx={{
                         background: "none",
@@ -101,4 +90,4 @@ const LoginForm: React.FC<LoginModalProps> = ({
     );
 };
 
-export default LoginForm;
+export default SignupForm;

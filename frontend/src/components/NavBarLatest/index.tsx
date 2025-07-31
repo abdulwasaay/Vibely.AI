@@ -11,6 +11,7 @@ import { modeContext } from "@/context/themeContext";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NAVAccordion from "./navDrawer";
 import { FormContext } from "@/context/FormContext.tsx/FormContext";
+import { formModalTypes } from "@/constants";
 
 const NavbarLatest = () => {
     const theme = useTheme();
@@ -19,11 +20,12 @@ const NavbarLatest = () => {
     const iconColor = theme.palette.text.secondary;
     const isMobileFirst = useMediaQuery('(max-width:768px)');
     const { push } = useRouter();
-    const { setOpen } = useContext(FormContext);
+    const { setOpen, setType } = useContext(FormContext);
 
     const modalOpener = useCallback(() => {
         document.activeElement instanceof HTMLElement && document.activeElement.blur();
         setOpen(true);
+        setType(formModalTypes?.loginModal)
     }, [open]);
 
     const modeChanger = useCallback(() => {
