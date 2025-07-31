@@ -16,13 +16,6 @@ const ForgotForm: React.FC<LoginModalProps> = ({
 
     const theme = useTheme();
 
-    const { setOpen, setType } = useContext(FormContext);
-
-    const NotHavAccountHandler = () => {
-        setOpen(true);
-        setType(formModalTypes?.signupModal)
-    }
-
     return (
         <>
             <IconButton
