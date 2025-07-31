@@ -24,11 +24,11 @@ const NavbarLatest = () => {
     const modalOpener = useCallback(() => {
         document.activeElement instanceof HTMLElement && document.activeElement.blur();
         setOpen(true);
-    }, []);
+    }, [open]);
 
     const modeChanger = useCallback(() => {
         setMode(!mode);
-    }, []);
+    }, [mode]);
 
     const modeIcon = !mode ? <DarkModeOutlinedIcon sx={{ color: iconColor }} /> : <LightModeOutlinedIcon sx={{ color: iconColor }} />
 
