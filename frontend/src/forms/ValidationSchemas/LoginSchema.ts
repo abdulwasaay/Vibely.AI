@@ -8,7 +8,7 @@ const loginSchema = object({
                 return this.createError({ message: "Invalid email format" });
             }
         } else if (value) {
-            const userIdRegex = /^[a-zA-Z0-9]+$/;
+            const userIdRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/;
             if (!userIdRegex.test(value)) {
                 return this.createError({ message: "User ID contains numbers and alphabets" });
             }
