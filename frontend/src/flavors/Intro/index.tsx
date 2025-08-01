@@ -40,7 +40,7 @@ const AIIntro = () => {
                         alignItems="center"
                         gap={4}
                         mt={2}
-                        sx={{overflowX:"hidden"}}
+                        sx={{ overflowX: "hidden" }}
                     >
                         <motion.div
                             initial={{ x: -100, opacity: 0 }}
