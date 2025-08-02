@@ -23,7 +23,6 @@ const ForgotForm: React.FC<LoginModalProps> = ({
     }
 
     const forgotFormik = useFormik({
-        enableReinitialize: true,
         initialValues: initialValues,
         onSubmit: ((values) => {
             console.log(values)
