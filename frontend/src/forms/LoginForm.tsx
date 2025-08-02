@@ -44,7 +44,6 @@ const LoginForm: React.FC<LoginModalProps> = ({
     }
 
     const loginFormik = useFormik({
-        enableReinitialize: true,
         initialValues: initialValues,
         onSubmit: ((values) => {
             console.log(values)
