@@ -7,12 +7,14 @@ const { default: mongoose } = require('mongoose');
 const app = express();
 app.use(cors(corsOptions));
 
-mongoConnection(mongodb_url , mongodb_name)
-
 app.get('/', (req, res) => {
-  res.send('Hello World!' + mongoose.connection.readyState);
+  res.send('Hello World!');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+mongoConnection(mongodb_url, mongodb_name).then(() => {
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}).catch((err) => {
+  console.log(err)
+})
