@@ -5,6 +5,8 @@ import { ButtonLatest, InputTextField } from "@/components";
 import { FormContext } from "@/context/FormContext.tsx/FormContext";
 import { useContext } from "react";
 import { formModalTypes } from "@/constants";
+import { useFormik } from "formik";
+import forgotSchema from "./ValidationSchemas/forgotPassSchema";
 
 interface LoginModalProps {
     closeModal: () => void;
@@ -15,6 +17,24 @@ const ForgotForm: React.FC<LoginModalProps> = ({
 }) => {
 
     const theme = useTheme();
+
+    const initialValues = {
+        emailId: "",
+    }
+
+    const forgotFormik = useFormik({
+        enableReinitialize: true,
+        initialValues: initialValues,
+        onSubmit: ((values) => {
+            console.log(values)
+        }),
+        validationSchema: forgotSchema
+    })
+
+    const submitHandler = (e: any) => {
+        e.preventDefault();
+        forgotFormik.submitForm();
+    }
 
     return (
         <>
@@ -31,30 +51,33 @@ const ForgotForm: React.FC<LoginModalProps> = ({
             <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
                 &quot;No problem! Enter your email to recover your account.&quot;
             </Typography>
-            <Box mb={1}>
-                <InputTextField
-                    placeHolder="Email id"
-                    type="email"
+            <form onSubmit={submitHandler}>
+                <Box mb={1}>
+                    <InputTextField
+                        placeHolder="Email id"
+                        type="email"
+                        name="emailId"
+                        formik={forgotFormik}
+                        fullWidth
+                    />
+                </Box>
+                <ButtonLatest
+                    title="Send"
+                    type="submit"
+                    color="primary"
                     fullWidth
-                    sx={{ padding: "5px 10px", mb: 1 }}
+                    sx={{
+                        borderRadius: 2,
+                        textTransform: "none",
+                        fontWeight: 600,
+                        py: 1.2,
+                        fontSize: 16,
+                        mb: 2,
+                        mt: 2
+                    }}
+                    clickHandler={() => console.log("sa")}
                 />
-            </Box>
-            <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{
-                    borderRadius: 2,
-                    textTransform: "none",
-                    fontWeight: 600,
-                    py: 1.2,
-                    fontSize: 16,
-                    mb: 2,
-                    mt:2
-                }}
-            >
-                Send
-            </Button>
+            </form>
         </>
     );
 };
