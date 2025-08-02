@@ -1,10 +1,11 @@
-import { object, string, number, date, InferType } from 'yup';
+import { object, string } from 'yup';
+import * as EmailValidator from 'email-validator';
 
 const loginSchema = object({
     userIdorMail: string().required("Email or User ID required!").test("emailTest", function (value) {
         if (value && value.includes("@")) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
+            const emailValidate = EmailValidator.validate(value);
+            if (!emailValidate) {
                 return this.createError({ message: "Invalid email format" });
             }
         } else if (value) {
@@ -15,15 +16,7 @@ const loginSchema = object({
         }
         return true;
     }),
-    password: string().required("Password is required!").test("passwordTest", function (value) {
-        if (value) {
-            const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-            if (!passwordRegex.test(value)) {
-                return this.createError({ message: "Password must be strong" });
-            }
-        }
-        return true
-    })
+    password: string().required("Password is required!")
 });
 
 export default loginSchema

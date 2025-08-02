@@ -8,6 +8,7 @@ interface ButtonLatestProps extends Omit<MuiButtonProps, 'children' | 'onClick'>
     size?: "small" | "large";
     loading?: boolean;
     type?: "button" | "submit";
+    customVariant?: "contained" | "outlined"
     sx?: SxProps<Theme>;
 }
 
@@ -18,6 +19,7 @@ const ButtonLatest: React.FC<ButtonLatestProps> = ({
     size = "small",
     loading = false,
     sx = {},
+    customVariant = "contained",
     ...rest
 }) => {
 
@@ -41,7 +43,7 @@ const ButtonLatest: React.FC<ButtonLatestProps> = ({
     return (
         <Button
             type={type}
-            variant="contained"
+            variant={customVariant}
             onClick={clickHandler}
             loading={loading}
             sx={{

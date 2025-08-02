@@ -1,4 +1,4 @@
-import { Box, Input, InputProps, SxProps, Theme, Typography, useTheme } from "@mui/material";
+import { Box, Input, InputProps, OutlinedInput, SxProps, Theme, Typography, useTheme } from "@mui/material";
 import { FormikProps } from "formik";
 
 interface InputTextFieldProps<T = Record<string, any>> {
@@ -31,23 +31,23 @@ const InputTextField = <T extends Record<string, any> = Record<string, any>>(
 
     return (
         <Box sx={{ mb: 1 }}>
-            <Input
+            <OutlinedInput
                 type={type}
                 name={name}
                 onChange={isFormik ? formik.handleChange : props.onChange}
-                onBlur={isFormik ? formik.handleBlur : props.onBlur} // <-- add this line
+                onBlur={isFormik ? formik.handleBlur : props.onBlur}
                 placeholder={placeHolder}
                 value={value}
                 sx={{
                     ...sx, outline: "none",
-                    "&:before": {
-                        borderBottom: showError ? `2px solid ${theme.palette.error.main}` : "", // default underline color
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: showError ? theme.palette.error.main : undefined,
                     },
-                    "&:hover:not(.Mui-disabled):before": {
-                        borderBottom: showError ? `2px solid ${theme.palette.error.main}` : "", // hover underline color
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: showError ? theme.palette.error.main : undefined,
                     },
-                    "&:after": {
-                        borderBottom: showError ? `2px solid ${theme.palette.error.main}` : "", // active/focus underline color
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: showError ? theme.palette.error.main : undefined,
                     },
                 }}
                 fullWidth

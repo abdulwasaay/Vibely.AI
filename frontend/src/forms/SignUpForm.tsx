@@ -1,10 +1,15 @@
 "use client"
-import { Box, Typography, IconButton, Button, useTheme } from "@mui/material";
+import { Box, Typography, IconButton, Button, useTheme, InputAdornment } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ButtonLatest, InputTextField } from "@/components";
 import { FormContext } from "@/context/FormContext.tsx/FormContext";
 import { useContext } from "react";
 import { formModalTypes } from "@/constants";
+import { useFormik } from "formik";
+import signupSchema from "./ValidationSchemas/SignupSchema";
+import usePassword from "@/hooks/usePassword";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 interface LoginModalProps {
     closeModal: () => void;
@@ -16,10 +21,35 @@ const SignupForm: React.FC<LoginModalProps> = ({
 
     const theme = useTheme();
     const { setOpen, setType } = useContext(FormContext);
+    const {
+        handleClickShowPassword,
+        handleMouseDownPassword,
+        showPassword
+    } = usePassword();
 
     const havAccountHandler = () => {
         setOpen(true);
         setType(formModalTypes?.loginModal)
+    }
+
+    const initialValues = {
+        userId: "",
+        emailId: "",
+        password: ""
+    }
+
+    const signupFormik = useFormik({
+        enableReinitialize: true,
+        initialValues: initialValues,
+        onSubmit: ((values) => {
+            console.log(values)
+        }),
+        validationSchema: signupSchema
+    })
+
+    const submitHandler = (e: any) => {
+        e.preventDefault();
+        signupFormik.submitForm();
     }
 
     return (
@@ -37,42 +67,60 @@ const SignupForm: React.FC<LoginModalProps> = ({
             <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
                 Join us today! Create your account to get started.
             </Typography>
-            <Box mb={1}>
-                <InputTextField
-                    placeHolder="User id"
-                    type="text"
+            <form onSubmit={submitHandler}>
+                <Box mb={1}>
+                    <InputTextField
+                        placeHolder="User id"
+                        name="userId"
+                        formik={signupFormik}
+                        type="text"
+                        fullWidth
+                    />
+                    <InputTextField
+                        placeHolder="Email id"
+                        type="email"
+                        name="emailId"
+                        formik={signupFormik}
+                        fullWidth
+                    />
+                    <InputTextField
+                        placeHolder="Password"
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        formik={signupFormik}
+                        fullWidth
+                        tabIndex={3}
+                        endAdornment={
+                            <InputAdornment position="end" sx={{ mr: 0.5 }}>
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </Box>
+                <ButtonLatest
+                    type="submit"
+                    title="Signup"
+                    clickHandler={() => { }}
+                    color="primary"
                     fullWidth
-                    sx={{ padding: "5px 10px", mb: 1 }}
+                    sx={{
+                        borderRadius: 2,
+                        textTransform: "none",
+                        fontWeight: 600,
+                        py: 1.2,
+                        fontSize: 16,
+                        mb: 2,
+                        mt: 2
+                    }}
                 />
-                <InputTextField
-                    placeHolder="Email id"
-                    type="email"
-                    fullWidth
-                    sx={{ padding: "5px 10px", mb: 1 }}
-                />
-                <InputTextField
-                    placeHolder="Password"
-                    type="password"
-                    fullWidth
-                    sx={{ padding: "5px 10px" }}
-                />
-            </Box>
-            <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{
-                    borderRadius: 2,
-                    textTransform: "none",
-                    fontWeight: 600,
-                    py: 1.2,
-                    fontSize: 16,
-                    mb: 2,
-                    mt: 2
-                }}
-            >
-                Signup
-            </Button>
+            </form>
             <Typography variant="body2" color="text.secondary" textAlign="center">
                 Already have an account?{" "}
                 <ButtonLatest
