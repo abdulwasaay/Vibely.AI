@@ -1,7 +1,7 @@
-const { origin } = require("./env")
+const { origins } = require("./env")
 
 const corsOptions = {
-    origin: origin
+    origin: origins
 }
 
 module.exports = {

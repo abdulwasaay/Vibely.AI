@@ -1,12 +1,15 @@
-const { corsOptions } = require('./corsOptions');
-
 require('dotenv').config()
 
 const port = process.env.PORT;
-const origin = process.env.ORIGIN;
+const origins = process.env.ORIGIN;
+const env = process.env.ENV;
+const mongodb_url = process.env.MONGO_URL;
+const mongodb_name = process.env.DB_NAME;
 
 module.exports = {
     port,
-    origin,
-    corsOptions
+    origins,
+    env,
+    mongodb_url,
+    mongodb_name
 }
