@@ -3,6 +3,7 @@ const { port, mongodb_url } = require('./config/env');
 const { corsOptions } = require('./config/corsOptions');
 const cors = require('cors');
 const mongoConnection = require('./services/mongoConnection');
+// require('dotenv').config()
 const flow = require('./flow');
 const app = express();
 
