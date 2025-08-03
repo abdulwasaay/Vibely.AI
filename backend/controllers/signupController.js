@@ -12,13 +12,13 @@ const signupController = async (req, res) => {
         if (username) {
             return res.status(400).send({ message: "Username already exists!" });
         }
-        const hashedPassword = await Hashing(password)  
+        const hashedPassword = await Hashing(password)
         await user.create({
             userName,
             email,
             password: hashedPassword
         })
-        return res.status(200).send({ message: "User Registered Successfully" });
+        res.status(200).send({ message: "User Registered Successfully" });
 
     } catch (err) {
         console.log(err)
