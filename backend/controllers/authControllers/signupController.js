@@ -22,7 +22,8 @@ const signupController = async (req, res) => {
         return res.status(200).send({ message: "User Registered Successfully" });
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
+        res.status(500).send({ message: "Something went wrong!" });
     }
 }
 
