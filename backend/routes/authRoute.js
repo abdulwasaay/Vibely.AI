@@ -1,7 +1,7 @@
 const express = require("express");
-const signupController = require("../controllers/signupController");
 const { UserNameValidator, EmailValidator, PasswordValidator } = require("../services/validators/UserFieldsValidator");
 const runValidation = require("../services/Validate");
+const signupController = require("../controllers/authControllers/signupController");
 const router = express.Router();
 
 const validations = [

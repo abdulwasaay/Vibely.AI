@@ -1,5 +1,5 @@
-const user = require("../models/UserSchema");
-const { Hashing } = require("../services/hashing");
+const user = require("../../models/UserSchema");
+const { Hashing } = require("../../services/hashing");
 
 const signupController = async (req, res) => {
     const { email, userName, password } = req.body;
@@ -16,7 +16,8 @@ const signupController = async (req, res) => {
         await user.create({
             userName,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            emailStatus: false
         })
         return res.status(200).send({ message: "User Registered Successfully" });
 
