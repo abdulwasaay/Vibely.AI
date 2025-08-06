@@ -1,4 +1,4 @@
-const { genSalt, hash } = require('bcrypt');
+const { genSalt, hash, compare } = require('bcrypt');
 
 const Hashing = async (password) => {
     try {
@@ -12,6 +12,17 @@ const Hashing = async (password) => {
     }
 }
 
+const DecryptHashing = async (password, hashed) => {
+    try {
+        const compared = await compare(password, hashed)
+        return compared
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
 module.exports = {
-    Hashing
+    Hashing,
+    DecryptHashing
 }
