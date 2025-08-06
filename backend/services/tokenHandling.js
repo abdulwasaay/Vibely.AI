@@ -9,16 +9,16 @@ const createToken = (allData, expiry, secret) => {
     })
 }
 
-// const verifyToken = (token, expiry, secret) => {
-//     return new Promise((resolve, reject) => {
-//         // jwt.sign({ data: allData }, secret, { expiresIn: expiry }, (err, token) => {
-//         //     if (err) reject(err);
-//         //     else resolve(token);
-//         // });
-//         jwt.verify(token, secret)
-//     })
-// }
+const verifyToken = (token, secret) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secret, (err, token) => {
+            if (err) reject(err);
+            else resolve(token);
+        });
+    })
+}
 
 module.exports = {
-    createToken
+    createToken,
+    verifyToken
 }

@@ -21,7 +21,7 @@ const forgetController = async (req, res) => {
             tokenExpiry,
             forgot_secret
         );
-        const resetLink = `${origins}reset-password/${resetToken}`;
+        const resetLink = `${origins}reset-password/${users._id}/${resetToken}`;
 
         const emailHTML = await ejs.renderFile(templatePath, {
             userName: users.userName || 'User',
