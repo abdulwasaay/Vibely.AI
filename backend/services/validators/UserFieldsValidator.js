@@ -20,8 +20,13 @@ const PasswordValidator = () => body("password")
     .isStrongPassword().withMessage("Password must be strong")
     .bail()
 
+const userIdValidator = () => body("userId")
+    .notEmpty().withMessage("User Id Required")
+    .bail()
+
 module.exports = {
     EmailValidator,
     UserNameValidator,
-    PasswordValidator
+    PasswordValidator,
+    userIdValidator
 }
