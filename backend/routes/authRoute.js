@@ -3,6 +3,7 @@ const { UserNameValidator, EmailValidator, PasswordValidator } = require("../ser
 const runValidation = require("../services/Validate");
 const signupController = require("../controllers/authControllers/signupController");
 const forgetController = require("../controllers/authControllers/forgetController");
+const loginController = require("../controllers/authControllers/loginController");
 const router = express.Router();
 
 const signupValidations = [
@@ -11,10 +12,13 @@ const signupValidations = [
     PasswordValidator()
 ]
 
-const forgetPassowrdValidations = [
-    EmailValidator()
+const loginValidations = [
+    EmailValidator(),
+    PasswordValidator()
 ]
+
 router.post("/signup", runValidation(signupValidations), signupController)
-router.post("/forgotpassword", runValidation(forgetPassowrdValidations), forgetController)
+router.post("/forgotpassword", EmailValidator(), forgetController)
+router.post("/login", runValidation(loginValidations), loginController)
 
 module.exports = router
