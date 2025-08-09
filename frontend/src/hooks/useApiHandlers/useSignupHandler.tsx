@@ -1,8 +1,8 @@
 "use client"
+import { post } from "@/config/apis";
 import { useMutate } from "@/hooks/useMutate";
-import { post } from "./apis";
 
-export const signupHandler = () => {
+export const useSignupHandler = () => {
     return useMutate({
         url: "auth/signup",
         mutationFn: post,

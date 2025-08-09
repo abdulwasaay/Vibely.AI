@@ -10,7 +10,7 @@ import signupSchema from "./ValidationSchemas/SignupSchema";
 import usePassword from "@/hooks/usePassword";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { signupHandler } from "@/apiHandlers/authHandlers";
+import { useSignupHandler } from "@/hooks/useApiHandlers/useSignupHandler";
 
 interface LoginModalProps {
     closeModal: () => void;
@@ -27,7 +27,7 @@ const SignupForm: React.FC<LoginModalProps> = ({
         handleMouseDownPassword,
         showPassword
     } = usePassword();
-    const { mutate: onSignup, isPending } = signupHandler();
+    const { mutate: onSignup, isPending } = useSignupHandler();
 
     const havAccountHandler = () => {
         setOpen(true);

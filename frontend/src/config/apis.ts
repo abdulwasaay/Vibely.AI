@@ -1,5 +1,5 @@
 "use client"
-import api from "./axios";
+import api from "../config/axios";
 
 export const post = async (url: string, data: any) => await api.post(url, data);
 export const get = async (url: string, data: any) => await api.get(url);
