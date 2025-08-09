@@ -1,7 +1,8 @@
 const { origins } = require("./env")
 
 const corsOptions = {
-    origin: origins
+    origin: origins,
+    credentials: true,  
 }
 
 module.exports = {
