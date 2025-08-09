@@ -38,6 +38,7 @@ api.interceptors.response.use(
         return response
     },
     (error) => {
+        console.log(error)
         if (error.response) {
             if (error.response.status === 400) {
                 toast.error(error.response.data.message)
@@ -49,6 +50,14 @@ api.interceptors.response.use(
             //     localStorage.removeItem("authToken");
             //     window.location.href = "/login";
             // }
+        } else {
+            if (error.code === 'ECONNABORTED') {
+                toast.error("Request timed out");
+            } else if (!navigator.onLine) {
+                toast.error("You are offline");
+            } else {
+                toast.error("Network error!");
+            }
         }
 
         return Promise.reject(error);

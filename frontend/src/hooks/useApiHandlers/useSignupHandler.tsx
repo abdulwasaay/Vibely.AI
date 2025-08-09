@@ -6,7 +6,5 @@ export const useSignupHandler = () => {
     return useMutate({
         url: "auth/signup",
         mutationFn: post,
-        // onSuccess,
-        // onError
     })
 }
