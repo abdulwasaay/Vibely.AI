@@ -1,5 +1,5 @@
 "use client"
-import { Box, Typography, IconButton, Button, useTheme, InputAdornment } from "@mui/material";
+import { Box, Typography, IconButton, useTheme, InputAdornment } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ButtonLatest, InputTextField } from "@/components";
 import { FormContext } from "@/context/FormContext.tsx/FormContext";
@@ -10,6 +10,7 @@ import signupSchema from "./ValidationSchemas/SignupSchema";
 import usePassword from "@/hooks/usePassword";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { signupHandler } from "@/apiHandlers/authHandlers";
 
 interface LoginModalProps {
     closeModal: () => void;
@@ -26,6 +27,7 @@ const SignupForm: React.FC<LoginModalProps> = ({
         handleMouseDownPassword,
         showPassword
     } = usePassword();
+    const { mutate: onSignup, isPending } = signupHandler();
 
     const havAccountHandler = () => {
         setOpen(true);
@@ -40,8 +42,19 @@ const SignupForm: React.FC<LoginModalProps> = ({
 
     const signupFormik = useFormik({
         initialValues: initialValues,
-        onSubmit: ((values) => {
-            console.log(values)
+        onSubmit: (async (values) => {
+            const reqObj = {
+                userName: values?.userId,
+                email: values?.emailId,
+                password: values?.password
+            }
+            const config = {
+                onSuccess: () => {
+                    signupFormik.resetForm();
+                    closeModal();
+                }
+            }
+            onSignup(reqObj, config)
         }),
         validationSchema: signupSchema
     })
@@ -106,6 +119,7 @@ const SignupForm: React.FC<LoginModalProps> = ({
                 <ButtonLatest
                     type="submit"
                     title="Signup"
+                    loading={isPending}
                     clickHandler={() => { }}
                     color="primary"
                     fullWidth
