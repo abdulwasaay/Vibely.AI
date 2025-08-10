@@ -1,17 +1,21 @@
 "use client"
-import { Box, Divider, Grid, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Avatar, Box, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import ButtonLatest from "../ButtonLatest";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import { modeContext } from "@/context/themeContext";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NAVAccordion from "./navDrawer";
 import { FormContext } from "@/context/FormContext.tsx/FormContext";
 import { formModalTypes } from "@/constants";
+import StarIcon from '@mui/icons-material/Star';
+import useAuth from "@/hooks/useAuth";
+import Logout from '@mui/icons-material/Logout';
+import { getLocalStorage } from "@/services/localStorageHandler";
 
 const NavbarLatest = () => {
     const theme = useTheme();
@@ -21,6 +25,16 @@ const NavbarLatest = () => {
     const isMobileFirst = useMediaQuery('(max-width:768px)');
     const { push } = useRouter();
     const { setOpen, setType } = useContext(FormContext);
+    const isUserLoggedIn = useAuth();
+    const user = JSON.parse(getLocalStorage("auth"));
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const modalOpener = useCallback(() => {
         document.activeElement instanceof HTMLElement && document.activeElement.blur();
@@ -31,6 +45,119 @@ const NavbarLatest = () => {
     const modeChanger = useCallback(() => {
         setMode(!mode);
     }, [mode]);
+
+    const profileMenu = (
+        <>
+            <Tooltip title="Account settings">
+                <IconButton
+                    onClick={handleClick}
+                    size="small"
+                    aria-controls={open ? 'account-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                >
+                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                </IconButton>
+            </Tooltip>
+            <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                slotProps={{
+                    paper: {
+                        elevation: 0,
+                        sx: {
+                            width: "200px",
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1,
+                            },
+                            '&::before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: 0,
+                                right: 14,
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                            },
+                        },
+                    },
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+                <MenuItem sx={{
+                    pointerEvents: "none", // Click disable
+                    "&:hover": {
+                        backgroundColor: "transparent", // Hover highlight remove
+                    },
+                    cursor: "default",
+                }}>
+                    <Avatar /> {user?.userName}
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                        <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                </MenuItem>
+            </Menu>
+        </>
+    )
+
+    const authPricing = isUserLoggedIn ? (
+        <Box sx={{ background: theme.palette.info.light }} display={"flex"} gap={1} padding={"10px 15px"} borderRadius={20}>
+            <Box sx={{ background: theme.palette.primary.main, borderRadius: "50%" }} width={20} height={20} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                <StarIcon
+                    sx={{ fontSize: 20, color: "#fff", width: 18, height: 18 }}
+                />
+            </Box>
+            <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                Credits left: 2
+            </Typography>
+        </Box>
+    ) : (
+        <Link href="/pricing" passHref>
+            <Box
+                sx={{
+                    display: 'inline-block',
+                    position: 'relative',
+                    textDecoration: 'none',
+                    '&:after': {
+                        content: '""',
+                        position: 'absolute',
+                        left: 0,
+                        bottom: 0,
+                        width: pathName === "/pricing" ? "100%" : 0,
+                        height: '2px',
+                        backgroundColor: theme.palette.primary.dark,
+                        transition: 'width 0.3s ease-in-out',
+                    },
+                    '&:hover:after': {
+                        width: '100%',
+                    },
+                }}
+            >
+                <Typography
+                    variant="body1"
+                    sx={{ fontSize: 16, fontWeight: 500 }}
+                >
+                    Pricing
+                </Typography>
+            </Box>
+        </Link>
+    )
 
     const modeIcon = !mode ? <DarkModeOutlinedIcon sx={{ color: iconColor }} /> : <LightModeOutlinedIcon sx={{ color: iconColor }} />
 
@@ -53,44 +180,26 @@ const NavbarLatest = () => {
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} gap={2}>
-                        <Link href="/pricing" passHref>
-                            <Box
-                                sx={{
-                                    display: 'inline-block',
-                                    position: 'relative',
-                                    textDecoration: 'none',
-                                    '&:after': {
-                                        content: '""',
-                                        position: 'absolute',
-                                        left: 0,
-                                        bottom: 0,
-                                        width: pathName === "/pricing" ? "100%" : 0,
-                                        height: '2px',
-                                        backgroundColor: theme.palette.primary.dark,
-                                        transition: 'width 0.3s ease-in-out',
-                                    },
-                                    '&:hover:after': {
-                                        width: '100%',
-                                    },
-                                }}
-                            >
-                                <Typography
-                                    variant="body1"
-                                    sx={{ fontSize: 16, fontWeight: 500 }}
-                                >
-                                    Pricing
-                                </Typography>
-                            </Box>
-                        </Link>
-                        <Box>
-                            <ButtonLatest
-                                title="LogIn"
-                                clickHandler={modalOpener}
-                            />
-                        </Box>
+
+                        {authPricing}
+                        {
+                            !isUserLoggedIn && (
+                                <Box>
+                                    <ButtonLatest
+                                        title="LogIn"
+                                        clickHandler={modalOpener}
+                                    />
+                                </Box>
+                            )
+                        }
                         <IconButton onClick={() => setMode(!mode)}>
                             {modeIcon}
                         </IconButton>
+                        {
+                            isUserLoggedIn && (
+                                profileMenu
+                            )
+                        }
                     </Box>
                 </Box>
             </Grid>
@@ -142,23 +251,27 @@ const NavbarLatest = () => {
                             },
                         }}
                     >
-                        <Typography
-                            variant="body1"
-                            sx={{ fontSize: 16, fontWeight: 500 }}
-                        >
-                            Pricing
-                        </Typography>
+                        {authPricing}
                     </Box>
                 </Link>
-                <Box>
-                    <ButtonLatest
-                        title="LogIn"
-                        clickHandler={modalOpener}
-                    />
-                </Box>
+                {
+                    !isUserLoggedIn && (
+                        <Box>
+                            <ButtonLatest
+                                title="LogIn"
+                                clickHandler={modalOpener}
+                            />
+                        </Box>
+                    )
+                }
                 <IconButton onClick={modeChanger}>
                     {modeIcon}
                 </IconButton>
+                {
+                    isUserLoggedIn && (
+                        profileMenu
+                    )
+                }
             </Box>
         </>
     )

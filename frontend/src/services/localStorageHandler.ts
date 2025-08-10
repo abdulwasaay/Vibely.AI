@@ -1,7 +1,7 @@
 "use client"
-export const addLocalStorage = (data: { key: string, value: any }) => {
+export const addLocalStorage = (key: string, data: any) => {
     const foundData = data && data;
-    localStorage.setItem(foundData?.key, foundData?.value);
+    localStorage.setItem(key, foundData);
 }
 
 export const getLocalStorage = (key: string) => {

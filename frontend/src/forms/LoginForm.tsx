@@ -10,6 +10,8 @@ import loginSchema from "./ValidationSchemas/LoginSchema";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import usePassword from "@/hooks/usePassword";
+import { useLoginHandler } from "@/hooks/useApiHandlers/useLoginHandler";
+import { addLocalStorage } from "../services/localStorageHandler";
 
 interface LoginModalProps {
     closeModal: () => void;
@@ -25,6 +27,7 @@ const LoginForm: React.FC<LoginModalProps> = ({
         handleMouseDownPassword,
         showPassword
     } = usePassword();
+    const { mutate: onLogin, isPending } = useLoginHandler();
 
     const { setOpen, setType } = useContext(FormContext);
 
@@ -39,14 +42,34 @@ const LoginForm: React.FC<LoginModalProps> = ({
     }
 
     const initialValues = {
-        userIdorMail: "",
+        email: "",
         password: ""
     }
 
     const loginFormik = useFormik({
         initialValues: initialValues,
         onSubmit: ((values) => {
-            console.log(values)
+            const reqObj = {
+                email: values?.email,
+                password: values?.password
+            }
+
+            const config = {
+                onSuccess: ({ data }: any) => {
+                    const user = data && data?.data;
+                    const saveData = JSON.stringify({
+                        tokenJwts: user?.token,
+                        userId: user?.users?.id,
+                        userName: user?.users?.userName,
+                        email: user?.users?.email
+                    })
+
+                    addLocalStorage("auth" , saveData)
+                    loginFormik.resetForm();
+                    closeModal();
+                }
+            }
+            onLogin(reqObj, config)
         }),
         validationSchema: loginSchema
     })
@@ -74,12 +97,12 @@ const LoginForm: React.FC<LoginModalProps> = ({
             <form onSubmit={submitHandler}>
                 <Box mb={1}>
                     <InputTextField
-                        placeHolder="Email id / Username"
+                        placeHolder="Email id"
                         type="text"
-                        name="userIdorMail"
+                        name="email"
                         fullWidth
                         formik={loginFormik}
-                        // sx={{ padding: "5px 10px", }}
+                    // sx={{ padding: "5px 10px", }}
                     />
                     <InputTextField
                         placeHolder="Password"
@@ -89,7 +112,7 @@ const LoginForm: React.FC<LoginModalProps> = ({
                         formik={loginFormik}
                         // sx={{ padding: "0px 10px" }}
                         endAdornment={
-                            <InputAdornment position="end" sx={{mr:0.5}}>
+                            <InputAdornment position="end" sx={{ mr: 0.5 }}>
                                 <IconButton
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
@@ -128,6 +151,7 @@ const LoginForm: React.FC<LoginModalProps> = ({
                         fontSize: 16,
                         mb: 1.5,
                     }}
+                    loading={isPending}
                 />
             </form>
             <Typography variant="body2" color="text.secondary" textAlign="center">

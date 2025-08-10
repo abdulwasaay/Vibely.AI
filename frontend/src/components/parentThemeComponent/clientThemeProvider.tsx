@@ -21,7 +21,6 @@ const ClientThemeProvider = ({ children }: { children: React.ReactNode }) => {
                     position="top-right"
                     theme={getTheme}
                     autoClose={5000}
-                    transition={Bounce}
                 />
             </ThemeProvider>
         </QueryClientProvider>
