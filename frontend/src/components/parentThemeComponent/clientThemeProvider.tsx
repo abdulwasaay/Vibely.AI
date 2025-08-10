@@ -10,7 +10,16 @@ const ClientThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const { mode } = useContext(modeContext);
     const getTheme = mode ? "dark" : "light";
     const theme = setTheme(getTheme);
-    const queryClient = new QueryClient()
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: 5 * 60 * 1000, // 5 min fresh
+                gcTime: 10 * 60 * 1000, // 10 min memory me
+                refetchOnWindowFocus: false,
+                retry: 1,
+            },
+        },
+    })
 
     return (
         <QueryClientProvider client={queryClient}>
