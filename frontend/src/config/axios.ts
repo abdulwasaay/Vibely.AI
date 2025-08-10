@@ -38,7 +38,6 @@ api.interceptors.response.use(
         return response
     },
     (error) => {
-        console.log(error)
         if (error.response) {
             if (error.response.status === 400) {
                 toast.error(error.response.data.message)
