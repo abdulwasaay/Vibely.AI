@@ -1,5 +1,5 @@
 "use client"
-import { Avatar, Box, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Avatar, Box, CircularProgress, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -118,11 +118,15 @@ const NavbarLatest = () => {
                     <Avatar /> {user?.userName}
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={logoutHandler}>
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    {isPending ? "loadConfig..." : "Logout"}
+                <MenuItem onClick={logoutHandler} disabled = {isPending}>
+                    {isPending ?
+                        <CircularProgress size="20px" sx={{ mx:"auto" ,color: theme.palette.text.disabled }} /> :
+                        <>
+                            <ListItemIcon>
+                                <Logout fontSize="small" />
+                            </ListItemIcon>
+                            Logout
+                        </>}
                 </MenuItem>
             </Menu>
         </>
