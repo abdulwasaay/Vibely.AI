@@ -6,6 +6,7 @@ const forgetController = require("../controllers/authControllers/forgetControlle
 const loginController = require("../controllers/authControllers/loginController");
 const resetTokenVerification = require("../middlewares/resetMiddleware");
 const resetController = require("../controllers/authControllers/resetController");
+const logoutController = require("../controllers/authControllers/logout");
 const router = express.Router();
 
 const signupValidations = [
@@ -28,5 +29,6 @@ router.post("/signup", runValidation(signupValidations), signupController)
 router.post("/forgotpassword", EmailValidator(), forgetController)
 router.post("/login", runValidation(loginValidations), loginController)
 router.post("/resetpassword", runValidation(resetValidations), resetTokenVerification, resetController)
+router.post("/logout",  logoutController)
 
 module.exports = router
