@@ -15,7 +15,8 @@ import { formModalTypes } from "@/constants";
 import StarIcon from '@mui/icons-material/Star';
 import useAuth from "@/hooks/useAuth";
 import Logout from '@mui/icons-material/Logout';
-import { getLocalStorage } from "@/services/localStorageHandler";
+import { getLocalStorage, removeLocalStorage } from "@/services/localStorageHandler";
+import { useLogoutHandler } from "@/hooks/useApiHandlers/useLogoutHandler";
 
 const NavbarLatest = () => {
     const theme = useTheme();
@@ -29,12 +30,23 @@ const NavbarLatest = () => {
     const user = JSON.parse(getLocalStorage("auth"));
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const { mutate: onLogout, isPending } = useLogoutHandler();
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const logoutHandler = () => {
+        onLogout({}, {
+            onSuccess: () => {
+                removeLocalStorage("auth");
+            }
+        })
+        handleClose();
+    }
 
     const modalOpener = useCallback(() => {
         document.activeElement instanceof HTMLElement && document.activeElement.blur();
@@ -106,11 +118,11 @@ const NavbarLatest = () => {
                     <Avatar /> {user?.userName}
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={logoutHandler}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    {isPending ? "loadConfig..." : "Logout"}
                 </MenuItem>
             </Menu>
         </>
@@ -230,30 +242,8 @@ const NavbarLatest = () => {
         <>
             <Divider />
             <Box display={"flex"} justifyContent={"end"} alignItems={"center"} gap={2} py={2}>
-                <Link href="/pricing" passHref>
-                    <Box
-                        sx={{
-                            display: 'inline-block',
-                            position: 'relative',
-                            textDecoration: 'none',
-                            '&:after': {
-                                content: '""',
-                                position: 'absolute',
-                                left: 0,
-                                bottom: 0,
-                                width: pathName === "/pricing" ? "100%" : 0,
-                                height: '2px',
-                                backgroundColor: theme.palette.primary.dark,
-                                transition: 'width 0.3s ease-in-out',
-                            },
-                            '&:hover:after': {
-                                width: '100%',
-                            },
-                        }}
-                    >
-                        {authPricing}
-                    </Box>
-                </Link>
+                {authPricing}
+
                 {
                     !isUserLoggedIn && (
                         <Box>
