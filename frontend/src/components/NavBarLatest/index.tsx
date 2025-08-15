@@ -27,7 +27,7 @@ const NavbarLatest = () => {
     const { push } = useRouter();
     const { setOpen, setType } = useContext(FormContext);
     const isUserLoggedIn = useAuth();
-    const user = JSON.parse(getLocalStorage("auth"));
+    const user = getLocalStorage("auth");
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { mutate: onLogout, isPending } = useLogoutHandler();
