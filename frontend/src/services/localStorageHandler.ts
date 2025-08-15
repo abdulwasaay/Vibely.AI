@@ -4,10 +4,10 @@ export const addLocalStorage = (key: string, data: any) => {
     localStorage.setItem(key, foundData);
 }
 
-export const getLocalStorage = (key: string) => {
+export const getLocalStorage = (key: string, isParse: boolean = true) => {
     const foundKey = key && key;
     const item: any = localStorage.getItem(foundKey);
-    return item
+    return isParse ? JSON.parse(item) : item
 }
 
 export const removeLocalStorage = (key: string) => {
