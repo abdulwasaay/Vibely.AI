@@ -17,7 +17,8 @@ const signupController = async (req, res) => {
             userName,
             email,
             password: hashedPassword,
-            emailStatus: false
+            emailStatus: false,
+            credits: 10
         })
         return res.status(200).send({ message: "User Registered Successfully" });
 
