@@ -12,7 +12,7 @@ const createToken = (allData, expiry, secret) => {
 const verifyToken = (token, secret) => {
     return new Promise((resolve, reject) => {
         jwt.verify(token, secret, (err, token) => {
-            if (err) reject(err);
+            if (err) reject(false);
             else resolve(token);
         });
     })
