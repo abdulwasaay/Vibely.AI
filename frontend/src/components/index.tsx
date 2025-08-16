@@ -5,6 +5,10 @@ import { withClientOnly } from "./ClientOnlyComponent";
 import ClientThemeProvider from "./parentThemeComponent/clientThemeProvider";
 import Plan from "./Plans";
 import InputTextField from "./InputFields/TextField";
+
+const LoadingPlaceholder = dynamic(() => import("./loadingPlaceHolder"), {
+  ssr: false,
+});
 const NavbarLatest = dynamic(() => import("./NavBarLatest"), {
     ssr: false,
 })
@@ -19,5 +23,6 @@ export {
     FooterLatest,
     withClientOnly,
     Plan,
-    InputTextField
+    InputTextField,
+    LoadingPlaceholder
 }

@@ -2,7 +2,7 @@ const { login_secret } = require("../config/env");
 const { verifyToken } = require("../services/tokenHandling");
 
 const tokenAuthentication = async (req, res, next) => {
-    const accessToken = req.headers.authorization.split(' ')[1];
+    const accessToken = req.headers.authorization && req.headers.authorization.split(' ')[1];
     if (!accessToken) {
         return res.status(401).send({ message: "Un Authenticated!" })
     } try {

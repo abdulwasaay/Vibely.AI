@@ -1,3 +1,4 @@
+"use client"
 import { get } from "@/config/apis"
 import { useFetch } from "../useFetch"
 

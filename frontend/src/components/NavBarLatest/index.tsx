@@ -1,5 +1,5 @@
 "use client"
-import { Avatar, Box, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Avatar, Box, CircularProgress, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -17,11 +17,13 @@ import useAuth from "@/hooks/useAuth";
 import Logout from '@mui/icons-material/Logout';
 import { getLocalStorage, removeLocalStorage } from "@/services/localStorageHandler";
 import { useLogoutHandler } from "@/hooks/useApiHandlers/useLogoutHandler";
+import { UserContext } from "@/context/UserContext";
 
 const NavbarLatest = () => {
     const theme = useTheme();
     const pathName = usePathname();
     const { mode, setMode } = useContext(modeContext);
+    const { user: users } = useContext(UserContext);
     const iconColor = theme.palette.text.secondary;
     const isMobileFirst = useMediaQuery('(max-width:768px)');
     const { push } = useRouter();
@@ -43,10 +45,11 @@ const NavbarLatest = () => {
         onLogout({}, {
             onSuccess: () => {
                 removeLocalStorage("auth");
+                handleClose();
             }
         })
-        handleClose();
     }
+    console.log(users, "us")
 
     const modalOpener = useCallback(() => {
         document.activeElement instanceof HTMLElement && document.activeElement.blur();
@@ -118,11 +121,19 @@ const NavbarLatest = () => {
                     <Avatar /> {user?.userName}
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={logoutHandler}>
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    {isPending ? "loadConfig..." : "Logout"}
+                <MenuItem onClick={logoutHandler} disabled={isPending}>
+                    {
+                        isPending ? (
+                            <CircularProgress size={15} sx={{ mx: "auto" }} />
+                        ) : (
+                            <>
+                                <ListItemIcon>
+                                    <Logout fontSize="small" />
+                                </ListItemIcon>
+                                Logout
+                            </>
+                        )
+                    }
                 </MenuItem>
             </Menu>
         </>
@@ -136,7 +147,7 @@ const NavbarLatest = () => {
                 />
             </Box>
             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                Credits left: 2
+                Credits left: {users?.credits}
             </Typography>
         </Box>
     ) : (

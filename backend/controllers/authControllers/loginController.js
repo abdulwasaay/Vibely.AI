@@ -18,7 +18,7 @@ const loginController = async (req, res) => {
             userName: users.userName,
             email: users.email
         };
-        const authToken = await createToken(authTokenData, "15m", login_secret);
+        const authToken = await createToken(authTokenData, "1m", login_secret);
         const refreshTokenData = {
             userId: users._id,
         }
