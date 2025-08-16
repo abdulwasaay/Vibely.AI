@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import usePassword from "@/hooks/usePassword";
 import { useLoginHandler } from "@/hooks/useApiHandlers/useLoginHandler";
 import { addLocalStorage } from "../services/localStorageHandler";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface LoginModalProps {
     closeModal: () => void;
@@ -20,6 +21,7 @@ interface LoginModalProps {
 const LoginForm: React.FC<LoginModalProps> = ({
     closeModal
 }) => {
+    const queryClient = useQueryClient();
 
     const theme = useTheme();
     const {
@@ -63,8 +65,8 @@ const LoginForm: React.FC<LoginModalProps> = ({
                         userName: user?.users?.userName,
                         email: user?.users?.email
                     })
-
-                    addLocalStorage("auth" , saveData)
+                    queryClient.invalidateQueries({ queryKey: ["summary"] });
+                    addLocalStorage("auth", saveData)
                     loginFormik.resetForm();
                     closeModal();
                 }

@@ -15,7 +15,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        const user: any = getLocalStorage("auth");
+        const user: any = getLocalStorage("auth", true);
         if (user && user?.tokenJwts) {
             config.headers["Authorization"] = `Bearer ${user?.tokenJwts}`;
         }
@@ -45,10 +45,9 @@ api.interceptors.response.use(
             if (error.response.status === 500) {
                 toast.error("Something went wrong")
             }
-            // if (error.response?.status === 401) {
-            //     localStorage.removeItem("authToken");
-            //     window.location.href = "/login";
-            // }
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                localStorage.removeItem("auth");
+            }
         } else {
             if (error.code === 'ECONNABORTED') {
                 toast.error("Request timed out");
