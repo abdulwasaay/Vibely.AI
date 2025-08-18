@@ -8,7 +8,8 @@ const my_email = process.env.EMAIL;
 const app_pass = process.env.APP_PASS;
 const forgot_secret = process.env.FORGOT_SECRET_KEY;
 const login_secret = process.env.LOGIN_SECRET_KEY;
-const refresh_secret = process.env.REFRESH_SECRET_KEY
+const refresh_secret = process.env.REFRESH_SECRET_KEY;
+const api_key = process.env.API_KEY;
 
 module.exports = {
     port,
@@ -19,5 +20,6 @@ module.exports = {
     app_pass,
     forgot_secret,
     login_secret,
-    refresh_secret
+    refresh_secret,
+    api_key
 }

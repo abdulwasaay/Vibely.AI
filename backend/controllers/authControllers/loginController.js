@@ -16,9 +16,9 @@ const loginController = async (req, res) => {
         }
         const authTokenData = {
             userName: users.userName,
-            email: users.email
+            email: users.email,
         };
-        const authToken = await createToken(authTokenData, "1m", login_secret);
+        const authToken = await createToken(authTokenData, "15m", login_secret);
         const refreshTokenData = {
             userId: users._id,
         }
@@ -33,13 +33,13 @@ const loginController = async (req, res) => {
         })
 
         res.status(200).send({
-            message:"Login Successfull",
+            message: "Login Successfull",
             data: {
                 token: authToken,
                 users: {
                     userName: users.userName,
                     email: users.email,
-                    id:users._id
+                    id: users._id
                 }
             }
         });
