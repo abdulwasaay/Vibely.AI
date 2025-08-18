@@ -30,7 +30,7 @@ const ResultUI = () => {
     }
 
     const downloadImage = () => {
-        let a = document.createElement("a");
+        const a = document.createElement("a");
         a.href = result?.url;
         a.download = "AI-Generated.png";
         a.target = "_blank";
