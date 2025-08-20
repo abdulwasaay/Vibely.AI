@@ -5,6 +5,11 @@ import { ButtonLatest } from "@/components";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+import { useContext } from "react";
+import { FormContext } from "@/context/FormContext.tsx/FormContext";
+import { formModalTypes } from "@/constants";
 
 const demoExs = [
     { imgs: "/mag1.jpg", alts: "Demo 1" },
@@ -16,6 +21,18 @@ const demoExs = [
 
 const GenerateImage = () => {
     const theme = useTheme();
+    const { push } = useRouter();
+    const authenticated = useAuth();
+    const { setOpen, setType } = useContext(FormContext)
+
+    const generateHandler = () => {
+        if (!authenticated) {
+            setOpen(true)
+            setType(formModalTypes.loginModal)
+        } else {
+            push("/result")
+        }
+    }
 
     return (
         <Box width="100%">
@@ -73,7 +90,7 @@ const GenerateImage = () => {
                         <Box display="flex" mt={3} justifyContent="center">
                             <ButtonLatest
                                 title="Generate Images"
-                                clickHandler={() => console.log("he")}
+                                clickHandler={generateHandler}
                                 endIcon={
                                     <AutoAwesomeTwoToneIcon sx={{ color: theme.palette.warning.main }} />
                                 }
