@@ -71,7 +71,7 @@ const NavbarLatest = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                    <Avatar sx={{ width: 32, height: 32 }}>{user?.userName?.charAt(0)?.toUpperCase()}</Avatar>
                 </IconButton>
             </Tooltip>
             <Menu
