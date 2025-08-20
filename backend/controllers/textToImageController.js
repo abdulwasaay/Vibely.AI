@@ -7,7 +7,7 @@ const textToImageController = async (req, res) => {
     try {
         const getUser = await user.findOne({ email });
         if (!getUser) return res.status(400).send({ message: "User not found!" });
-        if (getUser?.credits && getUser?.credits < 1) return res.status(400).send({ message: "Not enough credits!" });
+        if (getUser?.credits <= 0) return res.status(400).send({ message: "Not enough credits!" });
         const getImg = await GenerateImage(prompt);
         const buffer = Buffer.from(await getImg.arrayBuffer());
         const base64 = buffer.toString("base64")
@@ -18,9 +18,9 @@ const textToImageController = async (req, res) => {
                 { $set: { credits: newCreds } }, // $set use karna best practice hai
                 { new: true } // updated document return karega
             );
-            return res.status(200).send({ data: { img: `data:image/jpeg;base64,${base64}`, credits: updateUser.credits } })
+            return res.status(200).send({ img: `data:image/jpeg;base64,${base64}`, credits: updateUser.credits })
         }
-        res.status(500).send({ message:"Image not generated Successfully!" })
+        res.status(500).send({ message: "Image not generated Successfully!" })
 
     } catch (err) {
         console.log(err)
