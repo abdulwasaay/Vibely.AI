@@ -24,9 +24,14 @@ const userIdValidator = () => body("userId")
     .notEmpty().withMessage("User Id Required")
     .bail()
 
+const promptValidator = () => body("prompt")
+    .notEmpty().withMessage("Prompt is Required")
+    .bail()
+
 module.exports = {
     EmailValidator,
     UserNameValidator,
     PasswordValidator,
-    userIdValidator
+    userIdValidator,
+    promptValidator
 }
