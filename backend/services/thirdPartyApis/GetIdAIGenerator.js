@@ -1,20 +1,19 @@
-const { InferenceClient } = require("@huggingface/inference")
+const { default: axios } = require("axios")
 const { api_key } = require("../../config/env")
 
-const client = new InferenceClient(api_key);
-
 const GenerateImage = async (prompt) => {
+    const formData = new FormData()
+    formData.append('prompt', prompt)
     try {
-        const image = await client.textToImage({
-            provider: "nscale",
-            model: "black-forest-labs/FLUX.1-schnell",
-            inputs: prompt,
-            parameters: { num_inference_steps: 5 },
-        });
-
-        return image
+        const { data } = await axios.post('https://clipdrop-api.co/text-to-image/v1', formData, {
+            headers: {
+                'x-api-key': api_key,
+            },
+            responseType: 'arraybuffer'
+        })
+        return data
     } catch (err) {
-        throw new Error("Failed to generate Image")
+        throw new Error(err)
     }
 }
 
